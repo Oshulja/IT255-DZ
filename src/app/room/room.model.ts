@@ -1,11 +1,11 @@
 export class Room {
     name: string;
-    price: string;
+    price: number;
     link: string;
-    rating: string;
+    rating: number;
     description: string;
     
-    constructor (name: string, price: string, link: string, rating: string, description: string){
+    constructor (name: string, price: number, link: string, rating: number, description: string){
         this.name = name;
         this.price = price;
         this.link = link;

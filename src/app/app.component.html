@@ -4,35 +4,10 @@
         <button class="btn btn-primary btn-sm" (click)="randomize()">Randomize</button>
     </div>
     <div class="row">
-        <app-room *ngFor="let room of rooms | filterPipe : searchText; index as i;
-    " [room]="room"></app-room>
+        <app-room *ngFor="let room of rooms | filterPipe : searchText; index as i;" [room]="room"
+            (delete)="onDelete($event)" (edit)="onEdit($event)"></app-room>
     </div>
 
-    <div class="form pt-4">
-        <h3 class="text-center">Adding a room</h3>
-        <form>
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" name="name" class="form-control" #newname>
-            </div>
-            <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="number" name="price" class="form-control" #newprice>
-            </div>
-            <div class="form-group">
-                <label for="link">Link:</label>
-                <input type="text" name="link" class="form-control" #newlink>
-            </div>
-            <div class="form-group">
-                <label for="rating">Rating:</label>
-                <input type="number" name="rating" class="form-control" #newrating>
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea name="description" class="form-control" rows="3" #newdescription></textarea>
-            </div>
-            <button class="btn btn-primary"
-                (click)="addRoom(newname, newprice, newlink, newrating, newdescription)">Add</button>
-        </form>
-    </div>
+    <app-form-add (add)="addRoom($event)">
+    </app-form-add>
 </div>
