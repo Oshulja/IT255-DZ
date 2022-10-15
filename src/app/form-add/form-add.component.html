@@ -1,27 +1,60 @@
 <div class="form pt-4">
     <h3 class="text-center">Adding a room</h3>
-    <form>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)" class="form">
+
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" name="name" class="form-control" #newname>
+            <input type="text" name="name" class="form-control" #newname [formControl]="$any(name)"
+                [class.is-invalid]="(name.hasError('invalidName') || name.hasError('required')) && name.touched">
+            <div *ngIf="name.hasError('invalidName') && name.touched" class="form-text text-muted">
+                Name must start with first capital letter!
+            </div>
+            <div *ngIf="name.hasError('required') && name.touched" class="form-text text-muted">
+                This field is required
+            </div>
         </div>
+
         <div class="form-group">
             <label for="price">Price:</label>
-            <input type="number" name="price" class="form-control" #newprice>
+            <input type="number" name="price" class="form-control" #newprice [formControl]="$any(price)"
+                [class.is-invalid]="price.hasError('required') && price.touched">
+            <div *ngIf="price.hasError('required') && price.touched" class="form-text text-muted">
+                This field is required
+            </div>
         </div>
+
         <div class="form-group">
             <label for="link">Image link:</label>
-            <input type="text" name="link" class="form-control" #newlink>
+            <input type="text" name="link" class="form-control" #newlink [formControl]="$any(link)"
+                [class.is-invalid]="(link.hasError('invalidLink') || link.hasError('required')) && link.touched">
+            <div *ngIf="link.hasError('invalidLink') && link.touched" class="form-text text-muted">
+                Link must be in the right format!
+            </div>
+            <div *ngIf="link.hasError('required') && link.touched" class="form-text text-muted">
+                This field is required
+            </div>
         </div>
+
         <div class="form-group">
             <label for="rating">Rating:</label>
-            <input type="number" name="rating" class="form-control" #newrating>
+            <input type="number" name="rating" class="form-control" #newrating [formControl]="$any(rating)"
+                [class.is-invalid]="(rating.hasError('invalidRating') || rating.hasError('required')) && rating.touched">
+            <div *ngIf="rating.hasError('invalidRating') && rating.touched" class="form-text text-muted">
+                Rating value must be between 1 and 10!
+            </div>
+            <div *ngIf="rating.hasError('required') && rating.touched" class="form-text text-muted">
+                This field is required
+            </div>
         </div>
+
         <div class="form-group">
             <label for="description">Description:</label>
-            <textarea name="description" class="form-control" rows="3" #newdescription></textarea>
+            <textarea name="description" class="form-control" rows="3" #newdescription [formControl]="$any(description)"
+                [class.is-invalid]="description.hasError('required') && description.touched"></textarea>
+            <div *ngIf="description.hasError('required') && description.touched" class="form-text text-muted">
+                This field is required
+            </div>
         </div>
-        <button class="btn btn-primary"
-            (click)="addRoom(newname, newprice, newlink, newrating, newdescription)">Add</button>
+        <button class="btn btn-primary">Add</button>
     </form>
 </div>

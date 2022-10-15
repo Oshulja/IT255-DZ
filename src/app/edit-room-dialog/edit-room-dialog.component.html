@@ -1,29 +1,63 @@
 <h2 mat-dialog-title>Edit room</h2>
 <mat-dialog-content class="mat-typography" style="min-width: 350px;">
-    <form>
-        <div class="form-group">
-          <label for="nameInput">Room name:</label>
-          <input type="text" class="form-control" id="nameInput" placeholder="Enter room name" #name>
+    <form [formGroup]="myForm" (ngSubmit)="editRoom(myForm.value)" class="form">
+
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" name="name" class="form-control" #newname [formControl]="$any(name)"
+            [class.is-invalid]="(name.hasError('invalidName') || name.hasError('required')) && name.touched">
+        <div *ngIf="name.hasError('invalidName') && name.touched" class="form-text text-muted">
+            Name must start with first capital letter!
         </div>
-        <div class="form-group">
-          <label for="priceInput">Price:</label>
-          <input type="number" class="form-control" id="priceInput" placeholder="Enter room price" #price>
+        <div *ngIf="name.hasError('required') && name.touched" class="form-text text-muted">
+            This field is required
         </div>
-        <div class="form-group">
-          <label for="imageInput">Image link:</label>
-          <input type="text" class="form-control" id="imageInput" placeholder="Enter image url" #link>
+    </div>
+
+    <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" name="price" class="form-control" #newprice [formControl]="$any(price)"
+            [class.is-invalid]="price.hasError('required') && price.touched">
+        <div *ngIf="price.hasError('required') && price.touched" class="form-text text-muted">
+            This field is required
         </div>
-        <div class="form-group">
-          <label for="scoreInput">Rating:</label>
-          <input type="number" class="form-control" id="scoreInput" placeholder="Enter room score" #rating>
+    </div>
+
+    <div class="form-group">
+        <label for="link">Image link:</label>
+        <input type="text" name="link" class="form-control" #newlink [formControl]="$any(link)"
+            [class.is-invalid]="(link.hasError('invalidLink') || link.hasError('required')) && link.touched">
+        <div *ngIf="link.hasError('invalidLink') && link.touched" class="form-text text-muted">
+            Link must be in the right format!
         </div>
-        <div class="form-group">
-          <label for="descriptionInput">Room description:</label>
-          <textarea class="form-control" id="descriptionInput" rows="3" placeholder="Enter room description" #description></textarea>
+        <div *ngIf="link.hasError('required') && link.touched" class="form-text text-muted">
+            This field is required
         </div>
+    </div>
+
+    <div class="form-group">
+        <label for="rating">Rating:</label>
+        <input type="number" name="rating" class="form-control" #newrating [formControl]="$any(rating)"
+            [class.is-invalid]="(rating.hasError('invalidRating') || rating.hasError('required')) && rating.touched">
+        <div *ngIf="rating.hasError('invalidRating') && rating.touched" class="form-text text-muted">
+            Rating value must be between 1 and 10!
+        </div>
+        <div *ngIf="rating.hasError('required') && rating.touched" class="form-text text-muted">
+            This field is required
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea name="description" class="form-control" rows="3" #newdescription [formControl]="$any(description)"
+            [class.is-invalid]="description.hasError('required') && description.touched"></textarea>
+        <div *ngIf="description.hasError('required') && description.touched" class="form-text text-muted">
+            This field is required
+        </div>
+    </div>
       </form>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button (click)="editRoom(name, price, link, rating, description)">Confirm</button>
+  <button mat-button (click)="editRoom(myForm.value)">Confirm</button>
 </mat-dialog-actions>
