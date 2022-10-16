@@ -13,6 +13,8 @@ import { EditRoomDialogComponent } from './edit-room-dialog/edit-room-dialog.com
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormAddValidateComponent } from './form-add-validate/form-add-validate.component';
+import { RoomServiceService } from './services/room-service.service';
+import { FormReservationComponent } from './form-reservation/form-reservation.component';
 
 @NgModule({
   declarations: [
@@ -23,9 +25,11 @@ import { FormAddValidateComponent } from './form-add-validate/form-add-validate.
     RoomListComponent,
     EditRoomDialogComponent,
     FormAddValidateComponent,
+    FormReservationComponent,
   ],
   entryComponents:[
-    EditRoomDialogComponent
+    EditRoomDialogComponent,
+    FormReservationComponent
   ],
 
   imports: [
@@ -37,7 +41,7 @@ import { FormAddValidateComponent } from './form-add-validate/form-add-validate.
     BrowserAnimationsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [RoomServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

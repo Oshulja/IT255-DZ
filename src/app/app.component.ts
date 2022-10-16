@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Room } from './room/room.model';
 import { MatDialog } from '@angular/material/dialog';
 import { EditRoomDialogComponent } from './edit-room-dialog/edit-room-dialog.component';
+import { FormReservationComponent } from './form-reservation/form-reservation.component';
 
 
 @Component({
@@ -43,13 +44,13 @@ export class AppComponent {
   }
 
   onEdit(room: Room): void {
-    const dialogRef = this.dialog.open(EditRoomDialogComponent, {
+    const dialog = this.dialog.open(EditRoomDialogComponent, {
       data:
         room
-      
+
     });
 
-    dialogRef.afterClosed().subscribe(room => {
+    dialog.afterClosed().subscribe(room => {
       console.log(room);
     })
   }
@@ -57,6 +58,16 @@ export class AppComponent {
 
   addRoom(room: Room) {
     this.rooms.push(room);
+  }
+
+  onReserve(room: Room): void {
+    const dialog = this.dialog.open(FormReservationComponent, {
+      data:
+        room
+    });
+    dialog.afterClosed().subscribe((data) => {
+      alert(`You reserved room "${data.room.name}" for ${data.nights} nights for the price of ${data.price} $`);
+    })
   }
 }
 
