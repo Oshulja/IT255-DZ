@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+import { AppState } from '../redux/room.reducer';
 import { Room } from '../room/room.model';
+import * as RoomActions from '../redux/room.actions';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomServiceService {
 
-  private dataSource = new BehaviorSubject([new Room("Ramonda", 330, "https://casaenterijeri.rs/wp-content/uploads/2021/05/HOtel_Ramonda_02.jpg", 9.5, "Exclusive hotel right under the Rtanj mountain with beautiful view")])
-  currentData = this.dataSource.asObservable();
-
-
-  constructor() { }
+  constructor(private store: Store<{ rooms: AppState }>) { }
 
   getPrice(numberOfNights: number, room: Room) {
     if (numberOfNights > 0) {
@@ -23,26 +23,18 @@ export class RoomServiceService {
   }
 
   randomize() {
-    let arr = this.dataSource.getValue();
-
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
+    this.store.dispatch(RoomActions.randomize());
   }
 
   deleteRoom(room: Room): void {
-    let arr = this.dataSource.getValue();
-    const index = arr.indexOf(room);
-    if (index > -1) {
-      arr.splice(index, 1);
-    }
-    this.dataSource.next(arr);
+    this.store.dispatch(RoomActions.deleteRoom({ room }));
   }
 
   addRoom(room: Room) {
-    let arr = this.dataSource.getValue();
-    arr.push(room);
-    this.dataSource.next(arr);
+    this.store.dispatch(RoomActions.addRoom({ room }));
+  }
+
+  editRoom(oldRoom: Room, newRoom: Room) {
+    this.store.dispatch(RoomActions.editRoom({ oldRoom, newRoom }));
   }
 }

@@ -5,6 +5,8 @@ import { EditRoomDialogComponent } from './edit-room-dialog/edit-room-dialog.com
 import { FormReservationComponent } from './form-reservation/form-reservation.component';
 import { RoomServiceService } from './services/room-service.service';
 import { Observable } from 'rxjs';
+import { AppState } from './redux/room.reducer';
+import { Store } from '@ngrx/store';
 
 
 @Component({
@@ -16,9 +18,9 @@ export class AppComponent {
   rooms: Observable<any>;
   searchText: string;
 
-  constructor(public dialog: MatDialog, public roomService: RoomServiceService) {
-    this.rooms = this.roomService.currentData;
+  constructor(public dialog: MatDialog, public roomService: RoomServiceService, private store: Store<{ rooms: AppState }>) {
     this.searchText = "";
+    this.rooms = store.select(state => state.rooms.rooms);
   }
 
   ngOnInit(): void {
@@ -35,7 +37,7 @@ export class AppComponent {
     if (this.searchText !== "") {
       alert("Can't use randomize while searching!");
       return;
-    } else{
+    } else {
       this.roomService.randomize();
     }
 
@@ -56,8 +58,8 @@ export class AppComponent {
 
     });
 
-    dialog.afterClosed().subscribe(room => {
-      console.log(room);
+    dialog.afterClosed().subscribe((newRoom) => {
+      this.roomService.editRoom(room, newRoom)
     })
   }
 

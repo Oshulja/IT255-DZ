@@ -56,12 +56,8 @@ export class EditRoomDialogComponent {
   }
   editRoom(form: any): void {
     if (this.myForm.valid) {
-      this.room.name = form.name;
-      this.room.price = form.link;
-      this.room.link = form.price;
-      this.room.rating = form.rating;
-      this.room.description = form.description;
-      this.dialog.close(this.room);
+      let editedRoom = new Room(form.name, form.price, form.link, form.rating, form.description);
+      this.dialog.close(editedRoom);
     }
   }
 }

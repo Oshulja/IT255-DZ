@@ -15,6 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormAddValidateComponent } from './form-add-validate/form-add-validate.component';
 import { RoomServiceService } from './services/room-service.service';
 import { FormReservationComponent } from './form-reservation/form-reservation.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './redux/room.reducer';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { FormReservationComponent } from './form-reservation/form-reservation.co
     NgbModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forRoot({rooms: reducer})
   ],
   providers: [RoomServiceService],
   bootstrap: [AppComponent]
