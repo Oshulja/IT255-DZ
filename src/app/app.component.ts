@@ -10,6 +10,7 @@ import { EditRoomDialogComponent } from './edit-room-dialog/edit-room-dialog.com
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = "MetHotels";
   rooms: Room[];
   searchText: string;
 
